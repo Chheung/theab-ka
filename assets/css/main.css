@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@theme {
+  /* Luxury palette — dark, muted, refined */
+  --color-gold: #B8975A;
+  --color-gold-light: #D4BC8A;
+  --color-gold-dark: #8A6E3A;
+  --color-blush: #E8DDD5;
+  --color-blush-light: #F5F0EB;
+  --color-blush-dark: #C4B5A8;
+  --color-ivory: #FAF8F5;
+  --color-cream: #F5F2EE;
+  --color-burgundy: #4A2028;
+  --color-burgundy-light: #6B3040;
+  --color-burgundy-dark: #2E1018;
+  --color-charcoal: #1A1A1A;
+  --color-warm-white: #FAFAF8;
+  --color-dark: #0C0C0C;
+  --color-dark-soft: #141414;
+  --color-dark-card: #1E1E1E;
+  --color-muted: #888888;
+
+  --font-display: 'Playfair Display', 'Battambang', Georgia, 'Times New Roman', serif;
+  --font-script: 'Great Vibes', cursive;
+  --font-serif: 'Cormorant Garamond', 'Battambang', Georgia, serif;
+  --font-sans: 'Montserrat', 'Kantumruy Pro', 'Helvetica Neue', Arial, sans-serif;
+  --font-khmer: 'Battambang', 'Kantumruy Pro', sans-serif;
+}
+
+html {
+  overflow-x: hidden;
+  scroll-snap-type: y proximity;
+}
+
+section,
+footer {
+  scroll-snap-align: start;
+}
+
+/* Exclude GSAP-pinned sections from scroll snapping */
+.no-snap {
+  scroll-snap-align: none;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-dark);
+  color: var(--color-warm-white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--color-gold);
+  color: var(--color-dark);
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold-dark);
+  border-radius: 2px;
+}
+
+.text-gradient-gold {
+  background: linear-gradient(135deg, var(--color-gold-dark), var(--color-gold), var(--color-gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.gold-shimmer {
+  background: linear-gradient(90deg, var(--color-gold-dark) 0%, var(--color-gold-light) 25%, var(--color-gold) 50%, var(--color-gold-light) 75%, var(--color-gold-dark) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
