@@ -16,28 +16,25 @@ export default defineNuxtConfig({
   googleFonts: {
     families: {
       "Playfair Display": {
-        wght: [400, 500, 600, 700, 800, 900],
-        ital: [400, 700],
+        wght: [400, 700],
       },
       "Great Vibes": true,
       "Cormorant Garamond": {
-        wght: [300, 400, 500, 600, 700],
-        ital: [300, 400, 500, 600, 700],
+        wght: [300, 400],
+        ital: [400],
       },
       Montserrat: {
-        wght: [300, 400, 500, 600],
+        wght: [300, 400, 500],
       },
       Battambang: {
-        wght: [300, 400, 700, 900],
+        wght: [400, 700],
       },
       "Kantumruy Pro": {
-        wght: [300, 400, 500, 600, 700],
+        wght: [400],
       },
     },
     display: "swap",
-    prefetch: true,
     preconnect: true,
-    preload: true,
     download: true,
   },
 

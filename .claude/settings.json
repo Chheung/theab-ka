@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/chheung/Desktop/**)",
+      "Read(//Users/chheung/Downloads/**)",
+      "Read(//Users/chheung/**)",
+      "Bash(find /Users/chheung -maxdepth 5 -name *Screenshot*11.59*)"
+    ]
+  }
+}

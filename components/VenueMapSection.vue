@@ -2,10 +2,9 @@
   <section ref="sectionRef" class="relative bg-dark-soft overflow-hidden min-h-screen flex flex-col justify-center">
     <!-- Heading -->
     <div class="text-center py-28 md:py-36 px-6">
-      <p class="map-script font-sans text-xs md:text-sm uppercase tracking-[0.4em] text-gold/60 mb-1 will-change-transform">Find Your Way</p>
-      <p class="map-script font-khmer text-xs text-gold/40 mb-4 will-change-transform">ទីតាំង</p>
-      <h2 class="map-title font-display text-5xl md:text-7xl text-warm-white font-semibold will-change-transform">
-        Venue
+      <p class="map-script font-sans text-xs md:text-sm uppercase tracking-[0.4em] text-gold/60 mb-4 will-change-transform" :class="{ 'font-khmer! text-sm! tracking-normal!': locale === 'kh' }">{{ t('venue.subtitle') }}</p>
+      <h2 class="map-title font-display text-5xl md:text-7xl text-warm-white font-semibold will-change-transform" :class="{ 'font-khmer! text-4xl! md:text-6xl!': locale === 'kh' }">
+        {{ t('venue.title') }}
       </h2>
     </div>
 
@@ -19,25 +18,25 @@
           <ClientOnly>
             <LMap
               :zoom="15"
-              :center="[11.5564, 104.9282]"
+              :center="[wedding.venue.lat, wedding.venue.lng]"
               :use-global-leaflet="false"
             >
               <LTileLayer
                 url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
                 attribution="&copy; OpenStreetMap &copy; CARTO"
               />
-              <LMarker :lat-lng="[11.5564, 104.9282]">
+              <LMarker :lat-lng="[wedding.venue.lat, wedding.venue.lng]">
                 <LPopup>
                   <div class="text-center p-1">
-                    <strong>Sofitel Phnom Penh Phokeethra</strong><br />
-                    <span class="text-sm text-gray-600">Sothearos Blvd, Phnom Penh</span>
+                    <strong>{{ wedding.venue.name }}</strong><br />
+                    <span class="text-sm text-gray-600">{{ wedding.venue.address }}</span>
                   </div>
                 </LPopup>
               </LMarker>
             </LMap>
             <template #fallback>
               <div class="w-full h-full bg-dark-card flex items-center justify-center">
-                <p class="text-muted/50 font-sans text-sm">Loading map...</p>
+                <p class="text-muted/50 font-sans text-sm">{{ t('ui.loadingMap') }}</p>
               </div>
             </template>
           </ClientOnly>
@@ -47,12 +46,12 @@
       <!-- Get directions -->
       <div class="map-link text-center mt-10 will-change-transform">
         <a
-          href="https://www.google.com/maps/search/?api=1&query=11.5564,104.9282"
+          :href="wedding.venue.mapUrl"
           target="_blank"
           rel="noopener"
           class="inline-flex items-center gap-3 font-sans text-sm uppercase tracking-[0.2em] text-gold/60 hover:text-gold transition-colors duration-300 group"
         >
-          Get Directions
+          {{ t('venue.getDirections') }}
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="group-hover:translate-x-1 transition-transform">
             <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
@@ -65,6 +64,9 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { wedding } from '~/config/wedding'
+
+const { locale, t } = useI18n()
 
 if (import.meta.client) {
   gsap.registerPlugin(ScrollTrigger)

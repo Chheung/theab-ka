@@ -3,10 +3,9 @@
     <div class="max-w-lg mx-auto w-full">
       <!-- Heading -->
       <div class="text-center mb-14">
-        <p class="gift-script font-sans text-xs md:text-sm uppercase tracking-[0.4em] text-gold/60 mb-1 will-change-transform">With Love</p>
-        <p class="gift-script font-khmer text-xs text-gold/40 mb-4 will-change-transform">អំណោយ</p>
-        <h2 class="gift-title font-display text-5xl md:text-7xl text-warm-white font-semibold will-change-transform">
-          Gift
+        <p class="gift-script font-sans text-xs md:text-sm uppercase tracking-[0.4em] text-gold/60 mb-4 will-change-transform" :class="{ 'font-khmer! text-sm! tracking-normal!': locale === 'kh' }">{{ t('gift.subtitle') }}</p>
+        <h2 class="gift-title font-display text-5xl md:text-7xl text-warm-white font-semibold will-change-transform" :class="{ 'font-khmer! text-4xl! md:text-6xl!': locale === 'kh' }">
+          {{ t('gift.title') }}
         </h2>
       </div>
 
@@ -19,8 +18,8 @@
         <div class="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-gold/20" />
 
         <!-- Message -->
-        <p class="font-serif text-sm text-muted text-center leading-relaxed mb-10">
-          Your presence at our wedding is the greatest gift of all. However, if you wish to honor us with a gift, we would be grateful for your blessing.
+        <p class="font-serif text-sm text-muted text-center leading-relaxed mb-10" :class="{ 'font-khmer!': locale === 'kh' }">
+          {{ t('gift.message') }}
         </p>
 
         <!-- QR Code -->
@@ -28,7 +27,7 @@
           <div class="bg-warm-white p-4 rounded-lg">
             <ClientOnly>
               <QrcodeVue
-                :value="bankDetails.qrValue"
+                :value="wedding.gift.qrValue"
                 :size="180"
                 level="H"
                 render-as="svg"
@@ -37,7 +36,7 @@
               />
               <template #fallback>
                 <div class="w-[180px] h-[180px] bg-warm-white flex items-center justify-center">
-                  <p class="text-muted/30 text-xs">Loading...</p>
+                  <p class="text-muted/30 text-xs">{{ t('ui.loading') }}</p>
                 </div>
               </template>
             </ClientOnly>
@@ -46,9 +45,9 @@
 
         <!-- Bank details -->
         <div class="text-center space-y-2 mb-8">
-          <p class="font-sans text-[10px] uppercase tracking-[0.3em] text-gold/50">{{ bankDetails.bankName }}</p>
-          <p class="font-display text-lg text-warm-white">{{ bankDetails.accountName }}</p>
-          <p class="font-sans text-sm text-muted/60 tracking-wider">{{ bankDetails.accountNumber }}</p>
+          <p class="font-sans text-[10px] uppercase tracking-[0.3em] text-gold/50">{{ wedding.gift.bankName }}</p>
+          <p class="font-display text-lg text-warm-white">{{ wedding.gift.accountName }}</p>
+          <p class="font-sans text-sm text-muted/60 tracking-wider">{{ wedding.gift.accountNumber }}</p>
         </div>
 
         <!-- Copy button -->
@@ -64,7 +63,7 @@
             <svg v-else width="14" height="14" viewBox="0 0 24 24" fill="none">
               <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
-            {{ copied ? 'Copied' : 'Copy Account' }}
+            {{ copied ? t('gift.copied') : t('gift.copyAccount') }}
           </button>
         </div>
       </div>
@@ -76,6 +75,9 @@
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import QrcodeVue from 'qrcode.vue'
+import { wedding } from '~/config/wedding'
+
+const { locale, t } = useI18n()
 
 if (import.meta.client) {
   gsap.registerPlugin(ScrollTrigger)
@@ -84,21 +86,14 @@ if (import.meta.client) {
 const sectionRef = ref<HTMLElement | null>(null)
 const copied = ref(false)
 
-const bankDetails = {
-  bankName: 'ABA Bank',
-  accountName: 'Nato & Rita Wedding Fund',
-  accountNumber: '001-234-567',
-  qrValue: 'https://pay.ababank.com/example',
-}
-
 async function copyAccountNumber() {
   try {
-    await navigator.clipboard.writeText(bankDetails.accountNumber)
+    await navigator.clipboard.writeText(wedding.gift.accountNumber)
     copied.value = true
     setTimeout(() => { copied.value = false }, 2000)
   } catch {
     const textarea = document.createElement('textarea')
-    textarea.value = bankDetails.accountNumber
+    textarea.value = wedding.gift.accountNumber
     document.body.appendChild(textarea)
     textarea.select()
     document.execCommand('copy')

@@ -3,7 +3,7 @@
     @click="toggle"
     class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-gold/90 backdrop-blur-sm text-white flex items-center justify-center shadow-lg hover:bg-burgundy transition-all duration-300 border border-gold-light/50 cursor-pointer"
     :class="{ 'animate-pulse-ring': isPlaying }"
-    :title="isPlaying ? 'Pause music' : 'Play music'"
+    :title="isPlaying ? t('ui.pauseMusic') : t('ui.playMusic')"
   >
     <!-- Playing: equalizer bars -->
     <div v-if="isPlaying" class="flex items-end gap-0.5 h-4">
@@ -20,6 +20,7 @@
 
 <script setup lang="ts">
 const { isPlaying, toggle } = useBackgroundMusic()
+const { t } = useI18n()
 </script>
 
 <style scoped>

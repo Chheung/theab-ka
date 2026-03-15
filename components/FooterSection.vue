@@ -3,12 +3,12 @@
     <div class="max-w-2xl mx-auto text-center">
       <!-- Names -->
       <p class="footer-names font-display text-5xl md:text-7xl text-warm-white font-semibold mb-4 will-change-transform tracking-wider">
-        Nato &amp; Rita
+        {{ wedding.groom.name }} &amp; {{ wedding.bride.name }}
       </p>
 
       <!-- Date -->
-      <p class="footer-date font-sans text-xs tracking-[0.35em] uppercase text-muted/50 mb-12 will-change-transform">
-        15 . 08 . 2026
+      <p class="footer-date font-sans text-xs tracking-[0.35em] uppercase text-muted/50 mb-12 will-change-transform" :class="{ 'font-khmer! tracking-normal!': locale === 'kh' }">
+        {{ t('date.short') }}
       </p>
 
       <!-- Thin gold line -->
@@ -19,17 +19,17 @@
       </div>
 
       <!-- Thank you -->
-      <p class="footer-thankyou font-serif text-sm md:text-base text-muted/40 italic mb-14 will-change-transform">
-        Thank you for being part of our love story
+      <p class="footer-thankyou font-serif text-sm md:text-base text-muted/40 italic mb-14 will-change-transform" :class="{ 'font-khmer!': locale === 'kh' }">
+        {{ t('footer.thankyou') }}
       </p>
 
       <!-- Made by -->
       <div class="footer-credit border-t border-white/[0.06] pt-8 will-change-transform">
         <p class="font-sans text-[11px] text-muted/30 tracking-wider">
-          Crafted by <span class="text-gold/40">Techversed Co.LTD</span>
+          {{ t('footer.craftedBy') }} <span class="text-gold/40">{{ wedding.footer.credit }}</span>
         </p>
         <p class="font-sans text-[10px] text-muted/20 mt-2">
-          &copy; 2026
+          &copy; {{ wedding.footer.year }}
         </p>
       </div>
     </div>
@@ -39,6 +39,9 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { wedding } from '~/config/wedding'
+
+const { locale, t } = useI18n()
 
 if (import.meta.client) {
   gsap.registerPlugin(ScrollTrigger)

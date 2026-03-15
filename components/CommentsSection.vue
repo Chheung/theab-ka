@@ -3,17 +3,16 @@
     <div class="max-w-3xl mx-auto w-full">
       <!-- Heading -->
       <div class="text-center mb-20 md:mb-28">
-        <p class="comments-script font-sans text-xs md:text-sm uppercase tracking-[0.4em] text-gold/60 mb-1 will-change-transform">Kind Words</p>
-        <p class="comments-script font-khmer text-xs text-gold/40 mb-4 will-change-transform">ពាក្យអបអរ</p>
-        <h2 class="comments-title font-display text-5xl md:text-7xl text-warm-white font-semibold will-change-transform">
-          Wishes
+        <p class="comments-script font-sans text-xs md:text-sm uppercase tracking-[0.4em] text-gold/60 mb-4 will-change-transform" :class="{ 'font-khmer! text-sm! tracking-normal!': locale === 'kh' }">{{ t('comments.subtitle') }}</p>
+        <h2 class="comments-title font-display text-5xl md:text-7xl text-warm-white font-semibold will-change-transform" :class="{ 'font-khmer! text-4xl! md:text-6xl!': locale === 'kh' }">
+          {{ t('comments.title') }}
         </h2>
       </div>
 
       <!-- Comments -->
       <div class="space-y-6 md:space-y-8" style="perspective: 1200px">
         <div
-          v-for="comment in comments"
+          v-for="comment in wedding.comments"
           :key="comment.id"
           class="comment-card bg-dark-card border border-white/[0.06] rounded-xl p-6 md:p-8 will-change-transform"
         >
@@ -45,51 +44,15 @@
 <script setup lang="ts">
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { wedding } from '~/config/wedding'
+
+const { locale, t } = useI18n()
 
 if (import.meta.client) {
   gsap.registerPlugin(ScrollTrigger)
 }
 
 const sectionRef = ref<HTMLElement | null>(null)
-
-const comments = [
-  {
-    id: 1, name: 'Sarah Johnson', initials: 'SJ',
-    avatarBg: 'linear-gradient(135deg, #B8975A, #8A6E3A)',
-    message: 'Wishing you both a lifetime of love and happiness! Your love story is truly one for the ages. May every day bring you closer together.',
-    relation: "Bride's Best Friend",
-  },
-  {
-    id: 2, name: 'Michael Chen', initials: 'MC',
-    avatarBg: 'linear-gradient(135deg, #4A2028, #6B3040)',
-    message: 'Congratulations to the most beautiful couple! From college roommates to witnessing this beautiful union — what a journey, bro!',
-    relation: "Groom's College Friend",
-  },
-  {
-    id: 3, name: 'Aunt Patricia', initials: 'AP',
-    avatarBg: 'linear-gradient(135deg, #8A6E3A, #B8975A)',
-    message: 'My dearest niece and her wonderful partner, may your marriage be filled with all the right ingredients: a heap of love, a dash of humor, and a touch of romance.',
-    relation: "Bride's Aunt",
-  },
-  {
-    id: 4, name: 'David & Lisa Park', initials: 'DP',
-    avatarBg: 'linear-gradient(135deg, #6B3040, #4A2028)',
-    message: 'Two amazing people coming together to create an even more amazing future. We are so honored to be part of your special day!',
-    relation: 'Family Friends',
-  },
-  {
-    id: 5, name: 'Emma Williams', initials: 'EW',
-    avatarBg: 'linear-gradient(135deg, #B8975A, #6B3040)',
-    message: 'The way you two look at each other says it all. Here is to a lifetime of love, laughter, and happily ever after. So thrilled for you both!',
-    relation: 'Work Colleague',
-  },
-  {
-    id: 6, name: 'James & Rosie Thompson', initials: 'JR',
-    avatarBg: 'linear-gradient(135deg, #4A2028, #B8975A)',
-    message: 'As a couple married for 30 years, our advice: never stop dating each other, never stop laughing together, and always choose love. Congratulations!',
-    relation: "Groom's Parents' Friends",
-  },
-]
 
 onMounted(() => {
   const el = sectionRef.value
