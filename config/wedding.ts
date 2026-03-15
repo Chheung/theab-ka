@@ -30,6 +30,13 @@ export const wedding = {
     names: "Chheung & Guekhuy",
   },
 
+  // ==================== MUSIC (set to null to disable) ====================
+  music: {
+    enabled: true,
+    src: "/sounds/background-music.mp3",
+    volume: 0.3,
+  },
+
   // ==================== HERO ====================
   hero: {
     backgroundImage: "https://images.unsplash.com/photo-1519741497674-611481863552?w=1200&q=60&auto=format",

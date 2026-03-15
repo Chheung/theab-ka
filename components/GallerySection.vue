@@ -106,15 +106,6 @@ onMounted(() => {
     { opacity: 1, scale: 1, scrollTrigger: { trigger: el, start: 'top 75%', end: 'top 50%', scrub: 0.5 } },
   )
 
-  // Viewport entrance — fade up before pinning
-  gsap.fromTo(viewport,
-    { opacity: 0, y: 60, scale: 0.95 },
-    {
-      opacity: 1, y: 0, scale: 1,
-      scrollTrigger: { trigger: viewport, start: 'top 90%', end: 'top 20%', scrub: 0.5 },
-    },
-  )
-
   // Simple slide-up reveal
   const master = gsap.timeline()
 

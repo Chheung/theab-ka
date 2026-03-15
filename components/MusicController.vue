@@ -1,40 +1,42 @@
 <template>
   <button
+    v-if="enabled"
     @click="toggle"
-    class="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-gold/90 backdrop-blur-sm text-white flex items-center justify-center shadow-lg hover:bg-burgundy transition-all duration-300 border border-gold-light/50 cursor-pointer"
-    :class="{ 'animate-pulse-ring': isPlaying }"
+    class="flex items-center gap-1.5 bg-dark-card/80 backdrop-blur-md border border-white/[0.08] rounded-full px-3 py-2 cursor-pointer hover:border-gold/30 transition-all duration-300"
     :title="isPlaying ? t('ui.pauseMusic') : t('ui.playMusic')"
   >
     <!-- Playing: equalizer bars -->
-    <div v-if="isPlaying" class="flex items-end gap-0.5 h-4">
-      <span class="w-1 bg-white rounded-full animate-eq-1" />
-      <span class="w-1 bg-white rounded-full animate-eq-2" />
-      <span class="w-1 bg-white rounded-full animate-eq-3" />
+    <div v-if="isPlaying" class="flex items-end gap-0.5 h-3.5">
+      <span class="w-0.5 bg-gold rounded-full animate-eq-1" />
+      <span class="w-0.5 bg-gold rounded-full animate-eq-2" />
+      <span class="w-0.5 bg-gold rounded-full animate-eq-3" />
     </div>
-    <!-- Paused: music note icon -->
-    <svg v-else width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55C7.79 13 6 14.79 6 17s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z" />
+    <!-- Paused: muted icon -->
+    <svg v-else width="14" height="14" viewBox="0 0 24 24" fill="none" class="text-muted/50">
+      <path d="M11 5L6 9H2v6h4l5 4V5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <line x1="23" y1="9" x2="17" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+      <line x1="17" y1="9" x2="23" y2="15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
     </svg>
   </button>
 </template>
 
 <script setup lang="ts">
-const { isPlaying, toggle } = useBackgroundMusic()
+const { isPlaying, enabled, toggle } = useBackgroundMusic()
 const { t } = useI18n()
 </script>
 
 <style scoped>
 @keyframes eq1 {
   0%, 100% { height: 4px; }
-  50% { height: 16px; }
+  50% { height: 14px; }
 }
 @keyframes eq2 {
-  0%, 100% { height: 12px; }
-  50% { height: 6px; }
+  0%, 100% { height: 10px; }
+  50% { height: 5px; }
 }
 @keyframes eq3 {
-  0%, 100% { height: 8px; }
-  50% { height: 14px; }
+  0%, 100% { height: 7px; }
+  50% { height: 12px; }
 }
 .animate-eq-1 { animation: eq1 0.6s ease-in-out infinite; }
 .animate-eq-2 { animation: eq2 0.7s ease-in-out infinite 0.1s; }

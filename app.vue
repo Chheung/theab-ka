@@ -1,5 +1,6 @@
 <template>
   <div class="relative overflow-x-hidden">
+    <LoadingScreen />
     <LanguageSwitcher />
     <main>
       <HeroSection />

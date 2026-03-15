@@ -62,19 +62,21 @@ import { wedding } from '~/config/wedding'
 
 const { locale, t } = useI18n()
 const heroRef = ref<HTMLElement | null>(null)
-const { play } = useBackgroundMusic()
+const { enabled: musicEnabled, play } = useBackgroundMusic()
 
 onMounted(() => {
-  let musicStarted = false
-  function onFirstScroll() {
-    if (musicStarted) return
-    musicStarted = true
-    play()
-    window.removeEventListener('wheel', onFirstScroll)
-    window.removeEventListener('touchmove', onFirstScroll)
+  if (musicEnabled) {
+    let musicStarted = false
+    function onFirstScroll() {
+      if (musicStarted) return
+      musicStarted = true
+      play()
+      window.removeEventListener('wheel', onFirstScroll)
+      window.removeEventListener('touchmove', onFirstScroll)
+    }
+    window.addEventListener('wheel', onFirstScroll, { once: true, passive: true })
+    window.addEventListener('touchmove', onFirstScroll, { once: true, passive: true })
   }
-  window.addEventListener('wheel', onFirstScroll, { once: true, passive: true })
-  window.addEventListener('touchmove', onFirstScroll, { once: true, passive: true })
 
   loadScrollParallax()
 })
