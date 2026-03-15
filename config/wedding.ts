@@ -1,4 +1,7 @@
 export const wedding = {
+  // ==================== TEMPLATE ====================
+  template: "default", // "default" | add more template names here
+
   // ==================== COUPLE ====================
   groom: {
     name: "Nato",

@@ -1,4 +1,5 @@
 import tailwindcss from "@tailwindcss/vite";
+import { wedding } from "./config/wedding";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -8,6 +9,11 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
 
   modules: ["@nuxtjs/google-fonts", "@nuxt/icon", "nuxt3-leaflet"],
+
+  components: [
+    { path: "~/components" },
+    { path: `~/templates/${wedding.template}`, pathPrefix: false },
+  ],
 
   vite: {
     plugins: [tailwindcss()],
