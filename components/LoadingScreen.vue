@@ -6,7 +6,7 @@
     >
       <!-- Names -->
       <p class="font-script text-4xl md:text-5xl gold-shimmer mb-4 pt-4">
-        {{ wedding.groom.name }} & {{ wedding.bride.name }}
+        {{ wedding?.groom_name_en }} & {{ wedding?.bride_name_en }}
       </p>
 
       <!-- Loading bar -->
@@ -18,32 +18,32 @@
 </template>
 
 <script setup lang="ts">
-import { wedding } from '~/config/wedding'
+const { wedding } = useWedding();
 
-const ready = ref(false)
+const ready = ref(false);
 
 onMounted(() => {
   // Wait for key resources: fonts + hero image
-  const heroImg = new Image()
-  heroImg.src = wedding.hero.backgroundImage
+  const heroImg = new Image();
+  heroImg.src = wedding.value?.hero_image ?? "";
 
   const promises: Promise<any>[] = [
     // Hero image loaded
     new Promise<void>((resolve) => {
-      if (heroImg.complete) return resolve()
-      heroImg.onload = () => resolve()
-      heroImg.onerror = () => resolve()
+      if (heroImg.complete) return resolve();
+      heroImg.onload = () => resolve();
+      heroImg.onerror = () => resolve();
     }),
     // Fonts ready
     document.fonts?.ready ?? Promise.resolve(),
     // Minimum display time so it doesn't flash
     new Promise<void>((resolve) => setTimeout(resolve, 800)),
-  ]
+  ];
 
   Promise.all(promises).then(() => {
-    ready.value = true
-  })
-})
+    ready.value = true;
+  });
+});
 </script>
 
 <style scoped>
@@ -57,9 +57,15 @@ onMounted(() => {
 }
 
 @keyframes loadingBar {
-  0% { width: 0%; }
-  50% { width: 70%; }
-  100% { width: 100%; }
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 70%;
+  }
+  100% {
+    width: 100%;
+  }
 }
 .animate-loading-bar {
   animation: loadingBar 1.5s ease-in-out infinite;

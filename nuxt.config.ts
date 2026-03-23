@@ -44,6 +44,13 @@ export default defineNuxtConfig({
     download: true,
   },
 
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:3344",
+      weddingSlug: process.env.NUXT_PUBLIC_WEDDING_SLUG || "dear-lida",
+    },
+  },
+
   app: {
     head: {
       title: "Nato & Rita — Wedding Invitation",
