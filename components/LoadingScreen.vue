@@ -2,16 +2,26 @@
   <Transition name="loading">
     <div
       v-if="!ready"
-      class="fixed inset-0 z-[200] bg-dark flex flex-col items-center justify-center"
+      class="fixed inset-0 z-200 flex flex-col items-center justify-center"
+      :class="isFlower ? 'bg-bloom' : 'bg-dark'"
     >
       <!-- Names -->
-      <p class="font-script text-4xl md:text-5xl gold-shimmer mb-4 pt-4">
+      <p
+        class="font-script text-4xl mb-4 pt-4"
+        :class="isFlower ? 'rose-shimmer' : 'gold-shimmer'"
+      >
         {{ wedding?.groom_name_en }} & {{ wedding?.bride_name_en }}
       </p>
 
       <!-- Loading bar -->
-      <div class="w-32 h-px bg-white/10 rounded-full overflow-hidden">
-        <div class="h-full bg-gold/60 rounded-full animate-loading-bar" />
+      <div
+        class="w-32 h-px rounded-full overflow-hidden"
+        :class="isFlower ? 'bg-rose/20' : 'bg-white/10'"
+      >
+        <div
+          class="h-full rounded-full animate-loading-bar"
+          :class="isFlower ? 'bg-rose/60' : 'bg-gold/60'"
+        />
       </div>
     </div>
   </Transition>
@@ -20,23 +30,20 @@
 <script setup lang="ts">
 const { wedding } = useWedding();
 
+const isFlower = computed(() => wedding.value?.template === "flower");
 const ready = ref(false);
 
 onMounted(() => {
-  // Wait for key resources: fonts + hero image
   const heroImg = new Image();
   heroImg.src = wedding.value?.hero_image ?? "";
 
   const promises: Promise<any>[] = [
-    // Hero image loaded
     new Promise<void>((resolve) => {
       if (heroImg.complete) return resolve();
       heroImg.onload = () => resolve();
       heroImg.onerror = () => resolve();
     }),
-    // Fonts ready
     document.fonts?.ready ?? Promise.resolve(),
-    // Minimum display time so it doesn't flash
     new Promise<void>((resolve) => setTimeout(resolve, 800)),
   ];
 
@@ -69,5 +76,29 @@ onMounted(() => {
 }
 .animate-loading-bar {
   animation: loadingBar 1.5s ease-in-out infinite;
+}
+
+.rose-shimmer {
+  background: linear-gradient(
+    90deg,
+    #a06b5e 0%,
+    #d9a99e 25%,
+    #c4897b 50%,
+    #d9a99e 75%,
+    #a06b5e 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 </style>

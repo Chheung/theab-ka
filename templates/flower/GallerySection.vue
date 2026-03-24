@@ -1,8 +1,6 @@
 <template>
-  <section ref="sectionRef" class="relative bg-dark overflow-hidden no-snap">
-    <!-- Pinned gallery viewport -->
+  <section ref="sectionRef" class="relative bg-bloom overflow-hidden no-snap">
     <div ref="viewport" class="relative h-screen w-full overflow-hidden">
-      <!-- Stacked slides -->
       <div
         v-for="(image, index) in gallery"
         :key="image.id"
@@ -23,11 +21,10 @@
           />
         </div>
         <div
-          class="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-black/30"
+          class="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-bloom/20"
         />
       </div>
 
-      <!-- Progress dots -->
       <div
         class="absolute right-6 top-1/2 -translate-y-1/2 z-30 flex flex-col gap-2"
       >
@@ -35,14 +32,13 @@
           v-for="(_, i) in gallery"
           :key="i"
           class="w-1.5 h-1.5 rounded-full transition-all duration-300"
-          :class="activeSlide === i ? 'bg-gold/80 scale-125' : 'bg-white/20'"
+          :class="activeSlide === i ? 'bg-rose scale-125' : 'bg-white/40'"
         />
       </div>
 
-      <!-- Closing overlay -->
       <div
         ref="closingOverlay"
-        class="absolute inset-0 z-40 bg-dark pointer-events-none"
+        class="absolute inset-0 z-40 bg-bloom pointer-events-none"
         style="opacity: 0"
       />
     </div>
@@ -52,7 +48,6 @@
 <script setup lang="ts">
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
 const { wedding } = useWedding();
 const { locale, t } = useI18n();
 
@@ -78,30 +73,22 @@ const activeSlide = ref(0);
 onMounted(() => {
   const vp = viewport.value;
   if (!vp) return;
-
   const slides = slideRefs.value;
   const total = slides.length;
   if (total === 0) return;
 
   const master = gsap.timeline();
-
-  // Image slide-up transitions
   for (let i = 0; i < total - 1; i++) {
     const slide = slides[i];
     const img = slide.querySelector(".slide-img") as HTMLElement;
-
-    if (img) {
-      master.to(img, { scale: 1.05, duration: 1, ease: "none" }, i);
-    }
+    if (img) master.to(img, { scale: 1.05, duration: 1, ease: "none" }, i);
     master.to(slide, { yPercent: -100, duration: 1, ease: "power2.inOut" }, i);
   }
 
-  // Closing phase on last image
   const lastSlide = slides[total - 1];
   const lastImg = lastSlide?.querySelector(".slide-img") as HTMLElement;
   const closePhase = total - 1;
-
-  if (lastImg) {
+  if (lastImg)
     master.to(
       lastImg,
       {
@@ -112,19 +99,17 @@ onMounted(() => {
       },
       closePhase,
     );
-  }
   master.to(
     lastSlide,
     { scale: 0.6, opacity: 0, duration: 0.8, ease: "power2.inOut" },
     closePhase,
   );
-  if (closingOverlay.value) {
+  if (closingOverlay.value)
     master.to(
       closingOverlay.value,
       { opacity: 1, duration: 0.4, ease: "power2.in" },
       closePhase + 0.4,
     );
-  }
 
   ScrollTrigger.create({
     trigger: vp,
@@ -134,8 +119,10 @@ onMounted(() => {
     scrub: 0.6,
     animation: master,
     onUpdate: (self) => {
-      const idx = Math.min(Math.floor(self.progress * total), total - 1);
-      activeSlide.value = idx;
+      activeSlide.value = Math.min(
+        Math.floor(self.progress * total),
+        total - 1,
+      );
     },
   });
 });

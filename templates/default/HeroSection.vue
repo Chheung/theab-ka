@@ -18,14 +18,14 @@
     </div>
 
     <!-- Content -->
-    <div class="hero-content relative z-10 text-center px-6 max-w-4xl mx-auto">
+    <div class="hero-content relative z-10 text-center px-6 mx-auto">
       <!-- Wedding of -->
       <p
-        class="text-sm md:text-base text-gold/60 mb-6 animate-[fadeUp_0.6s_0.3s_ease-out_both]"
+        class="text-gold/60 mb-6 animate-[fadeUp_0.6s_0.3s_ease-out_both]"
         :class="
           locale === 'kh'
-            ? 'font-khmer'
-            : 'font-sans text-xs md:text-sm uppercase tracking-[0.4em]'
+            ? 'font-khmer text-sm'
+            : 'font-sans text-xs uppercase tracking-[0.4em]'
         "
       >
         {{ t("hero.weddingOf") }}
@@ -35,20 +35,14 @@
       <div
         class="relative pt-8 pb-4 mb-2 animate-[fadeIn_1s_0.7s_ease-out_both]"
       >
-        <div class="flex items-end justify-center gap-3 md:gap-6">
-          <h1
-            class="font-script text-6xl md:text-8xl lg:text-[10rem] gold-shimmer leading-[1.2]"
-          >
+        <div class="flex items-end justify-center gap-3">
+          <h1 class="font-script text-6xl gold-shimmer leading-[1.2]">
             {{ wedding?.groom_name_en }}
           </h1>
-          <span
-            class="font-script text-3xl md:text-5xl lg:text-7xl text-gold/50 leading-[1.2]"
-          >
+          <span class="font-script text-3xl text-gold/50 leading-[1.2]">
             &amp;
           </span>
-          <h1
-            class="font-script text-6xl md:text-8xl lg:text-[10rem] gold-shimmer leading-[1.2]"
-          >
+          <h1 class="font-script text-6xl gold-shimmer leading-[1.2]">
             {{ wedding?.bride_name_en }}
           </h1>
         </div>
@@ -56,15 +50,15 @@
 
       <!-- Date -->
       <p
-        class="font-sans text-xs md:text-sm tracking-[0.35em] uppercase text-muted mb-6 animate-[fadeUp_0.5s_1.2s_ease-out_both]"
+        class="font-sans text-xs tracking-[0.35em] uppercase text-muted mb-6 animate-[fadeUp_0.5s_1.2s_ease-out_both]"
         :class="{ 'font-khmer! tracking-normal!': locale === 'kh' }"
       >
-        {{ t("date.display") }} &middot; {{ t("date.location") }}
+        {{ dateDisplay }} &middot; {{ venueCity }}
       </p>
 
       <!-- Invitation -->
       <p
-        class="font-serif text-lg md:text-2xl text-gold/60 italic mb-14 animate-[fadeUp_0.5s_1.4s_ease-out_both]"
+        class="font-serif text-lg text-gold/60 italic mb-14 animate-[fadeUp_0.5s_1.4s_ease-out_both]"
       >
         {{ t("hero.youreInvited") }},
         <span class="text-gold/80">{{ wedding?.guest?.name_en ?? "" }}</span>
@@ -74,7 +68,6 @@
       <div class="mb-16 animate-[fadeUp_0.5s_1.6s_ease-out_both]">
         <CountdownTimer />
       </div>
-
     </div>
   </section>
 </template>
@@ -85,6 +78,19 @@ const { wedding } = useWedding();
 const { locale, t } = useI18n();
 const heroRef = ref<HTMLElement | null>(null);
 const { enabled: musicEnabled, play } = useBackgroundMusic();
+
+const dateDisplay = computed(() => {
+  const d = wedding.value?.date;
+  if (!d) return "";
+  const dt = new Date(d);
+  return dt.toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+});
+
+const venueCity = computed(() => wedding.value?.venues?.[0]?.city_en ?? "");
 
 onMounted(() => {
   if (musicEnabled.value) {

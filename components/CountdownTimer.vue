@@ -1,20 +1,22 @@
 <template>
-  <div class="flex justify-center gap-6 md:gap-10">
+  <div class="flex justify-center gap-6">
     <div
       v-for="unit in units"
       :key="unit.key"
       class="flex flex-col items-center"
     >
       <span
-        class="font-display text-3xl md:text-5xl text-gold font-light leading-none tracking-wider"
+        class="font-display text-3xl font-light leading-none tracking-wider"
+        :class="isFlower ? 'text-rose' : 'text-gold'"
       >
         {{ String(unit.value).padStart(2, "0") }}
       </span>
       <span
-        class="font-sans text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-muted mt-2"
+        class="font-sans text-[9px] uppercase tracking-[0.3em] mt-2"
         :class="{
-          'font-khmer! text-[10px]! md:text-xs! tracking-normal!':
-            locale === 'kh',
+          'font-khmer! text-[10px]! tracking-normal!': locale === 'kh',
+          'text-thorn': isFlower,
+          'text-muted': !isFlower,
         }"
       >
         {{ t(`countdown.${unit.key}`) }}
@@ -25,6 +27,7 @@
 
 <script setup lang="ts">
 const { wedding } = useWedding();
+const isFlower = computed(() => wedding.value?.template === "flower");
 
 const { locale, t } = useI18n();
 const targetDate = computed(() => new Date(wedding.value?.date ?? 0));

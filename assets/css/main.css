@@ -2,29 +2,47 @@
 
 @theme {
   /* Luxury palette — dark, muted, refined */
-  --color-gold: #B8975A;
-  --color-gold-light: #D4BC8A;
-  --color-gold-dark: #8A6E3A;
-  --color-blush: #E8DDD5;
-  --color-blush-light: #F5F0EB;
-  --color-blush-dark: #C4B5A8;
-  --color-ivory: #FAF8F5;
-  --color-cream: #F5F2EE;
-  --color-burgundy: #4A2028;
-  --color-burgundy-light: #6B3040;
-  --color-burgundy-dark: #2E1018;
-  --color-charcoal: #1A1A1A;
-  --color-warm-white: #FAFAF8;
-  --color-dark: #0C0C0C;
+  --color-gold: #b8975a;
+  --color-gold-light: #d4bc8a;
+  --color-gold-dark: #8a6e3a;
+  --color-blush: #e8ddd5;
+  --color-blush-light: #f5f0eb;
+  --color-blush-dark: #c4b5a8;
+  --color-ivory: #faf8f5;
+  --color-cream: #f5f2ee;
+  --color-burgundy: #4a2028;
+  --color-burgundy-light: #6b3040;
+  --color-burgundy-dark: #2e1018;
+  --color-charcoal: #1a1a1a;
+  --color-warm-white: #fafaf8;
+  --color-dark: #0c0c0c;
   --color-dark-soft: #141414;
-  --color-dark-card: #1E1E1E;
+  --color-dark-card: #1e1e1e;
   --color-muted: #888888;
 
-  --font-display: 'Playfair Display', 'Battambang', Georgia, 'Times New Roman', serif;
-  --font-script: 'Great Vibes', cursive;
-  --font-serif: 'Cormorant Garamond', 'Battambang', Georgia, serif;
-  --font-sans: 'Montserrat', 'Kantumruy Pro', 'Helvetica Neue', Arial, sans-serif;
-  --font-khmer: 'Battambang', 'Kantumruy Pro', sans-serif;
+  /* Flower palette — soft, romantic, botanical */
+  --color-rose: #c4897b;
+  --color-rose-light: #d9a99e;
+  --color-rose-dark: #a06b5e;
+  --color-sage: #7b9e87;
+  --color-sage-light: #a3bfad;
+  --color-sage-dark: #5d7a66;
+  --color-petal: #f3e1da;
+  --color-petal-light: #faf0ec;
+  --color-bloom: #fff8f3;
+  --color-bloom-soft: #fef5ef;
+  --color-bloom-card: #fffbf8;
+  --color-bark: #3d2c2e;
+  --color-bark-light: #5a4345;
+  --color-thorn: #9e8e8f;
+
+  --font-display:
+    "Playfair Display", "Battambang", Georgia, "Times New Roman", serif;
+  --font-script: "Great Vibes", cursive;
+  --font-serif: "Cormorant Garamond", "Battambang", Georgia, serif;
+  --font-sans:
+    "Montserrat", "Kantumruy Pro", "Helvetica Neue", Arial, sans-serif;
+  --font-khmer: "Battambang", "Kantumruy Pro", sans-serif;
 }
 
 html {
@@ -44,11 +62,34 @@ footer {
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--color-dark);
+  background-color: #050505;
   color: var(--color-warm-white);
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== Mobile-first shell ===== */
+.app-outer {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.app-shell {
+  width: 100%;
+  max-width: 430px;
+  position: relative;
+}
+
+/* On wider screens, add subtle side shadow for phone-card feel */
+@media (min-width: 431px) {
+  .app-shell {
+    box-shadow:
+      0 0 80px rgba(0, 0, 0, 0.6),
+      0 0 2px rgba(184, 151, 90, 0.08);
+  }
 }
 
 ::selection {
@@ -67,20 +108,44 @@ body {
   border-radius: 2px;
 }
 
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 .text-gradient-gold {
-  background: linear-gradient(135deg, var(--color-gold-dark), var(--color-gold), var(--color-gold-light));
+  background: linear-gradient(
+    135deg,
+    var(--color-gold-dark),
+    var(--color-gold),
+    var(--color-gold-light)
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
 .gold-shimmer {
-  background: linear-gradient(90deg, var(--color-gold-dark) 0%, var(--color-gold-light) 25%, var(--color-gold) 50%, var(--color-gold-light) 75%, var(--color-gold-dark) 100%);
+  background: linear-gradient(
+    90deg,
+    var(--color-gold-dark) 0%,
+    var(--color-gold-light) 25%,
+    var(--color-gold) 50%,
+    var(--color-gold-light) 75%,
+    var(--color-gold-dark) 100%
+  );
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -89,8 +154,13 @@ body {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 .animate-float {

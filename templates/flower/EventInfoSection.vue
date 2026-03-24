@@ -2,63 +2,61 @@
   <section
     id="event-info"
     ref="sectionRef"
-    class="relative bg-dark overflow-hidden no-snap"
+    class="relative bg-bloom-soft overflow-hidden no-snap"
   >
-    <!-- Big cinematic heading — pinned -->
+    <!-- Heading pinned -->
     <div
       ref="headingPin"
       class="h-screen flex flex-col items-center justify-center px-6"
     >
       <p
-        class="event-script font-sans text-xs uppercase tracking-[0.4em] text-gold/60 mb-6 will-change-transform"
+        class="event-script font-sans text-xs uppercase tracking-[0.4em] text-rose/60 mb-6 will-change-transform"
         :class="{ 'font-khmer! text-sm! tracking-normal!': locale === 'kh' }"
       >
         {{ t("event.subtitle") }}
       </p>
       <h2
-        class="event-title font-display text-5xl text-warm-white font-semibold text-center will-change-transform"
+        class="event-title font-display text-5xl text-bark font-semibold text-center will-change-transform"
         :class="{ 'font-khmer! text-4xl!': locale === 'kh' }"
       >
         {{ t("event.title") }}
       </h2>
       <div
-        class="event-line w-16 h-px bg-gold/30 mx-auto mt-8 will-change-transform"
+        class="event-line w-16 h-px bg-rose/30 mx-auto mt-8 will-change-transform"
       />
     </div>
 
-    <!-- Timeline content -->
+    <!-- Timeline -->
     <div ref="timelineWrap" class="relative mx-auto px-6 pb-40">
-      <!-- Timeline left line -->
       <div class="absolute left-6 top-0 bottom-0 w-px">
-        <div class="timeline-line w-full h-full bg-gold/20 origin-top" />
+        <div class="timeline-line w-full h-full bg-sage/20 origin-top" />
       </div>
 
       <div class="space-y-28">
-        <!-- Event cards -->
         <div
           v-for="(event, i) in events"
           :key="i"
           class="timeline-item relative pl-14"
         >
           <div class="timeline-dot absolute left-6 top-1 -translate-x-1/2 z-10">
-            <div class="w-2.5 h-2.5 rounded-full bg-gold" />
+            <div class="w-2.5 h-2.5 rounded-full bg-sage" />
           </div>
           <div
-            class="timeline-card bg-dark-card border border-white/6 rounded-xl p-8 will-change-transform"
+            class="timeline-card bg-bloom-card border border-rose/10 rounded-xl p-8 shadow-sm will-change-transform"
           >
             <h3
-              class="font-display text-xl text-warm-white font-semibold mb-6"
+              class="font-display text-xl text-bark font-semibold mb-6"
               :class="{ 'font-khmer! text-lg!': locale === 'kh' }"
             >
               {{ event.title }}
             </h3>
             <div
-              class="space-y-4 text-muted"
+              class="space-y-4 text-thorn"
               :class="{ 'font-khmer': locale === 'kh' }"
             >
               <div v-if="event.date" class="flex items-center gap-3">
                 <div class="w-4 flex justify-center">
-                  <div class="w-1 h-1 rounded-full bg-gold/40" />
+                  <div class="w-1 h-1 rounded-full bg-sage/40" />
                 </div>
                 <span
                   class="font-sans text-sm"
@@ -68,7 +66,7 @@
               </div>
               <div class="flex items-center gap-3">
                 <div class="w-4 flex justify-center">
-                  <div class="w-1 h-1 rounded-full bg-gold/40" />
+                  <div class="w-1 h-1 rounded-full bg-sage/40" />
                 </div>
                 <span
                   class="font-sans text-sm"
@@ -78,7 +76,7 @@
               </div>
               <div v-if="event.description" class="flex items-center gap-3">
                 <div class="w-4 flex justify-center">
-                  <div class="w-1 h-1 rounded-full bg-gold/40" />
+                  <div class="w-1 h-1 rounded-full bg-sage/40" />
                 </div>
                 <span
                   class="font-sans text-sm"
@@ -88,18 +86,11 @@
               </div>
               <div v-if="event.venue" class="flex items-center gap-3">
                 <div class="w-4 flex justify-center">
-                  <div class="w-1 h-1 rounded-full bg-gold/40" />
+                  <div class="w-1 h-1 rounded-full bg-sage/40" />
                 </div>
                 <div>
-                  <p class="font-serif text-sm text-warm-white/80">
+                  <p class="font-serif text-sm text-bark/80">
                     {{ event.venue }}
-                  </p>
-                  <p
-                    v-if="event.venueDetail"
-                    class="font-sans text-xs text-muted/60"
-                    :class="{ 'font-khmer!': locale === 'kh' }"
-                  >
-                    {{ event.venueDetail }}
                   </p>
                 </div>
               </div>
@@ -110,17 +101,18 @@
         <!-- Dress Code -->
         <div class="timeline-item relative pl-14">
           <div class="timeline-dot absolute left-6 top-1 -translate-x-1/2 z-10">
-            <div class="w-2 h-2 bg-gold/60 rotate-45" />
+            <div class="w-2 h-2 bg-rose/60 rotate-45" />
           </div>
           <div
-            class="timeline-card border border-white/6 rounded-xl px-8 py-5 will-change-transform"
+            class="timeline-card border border-rose/10 rounded-xl px-8 py-5 will-change-transform"
           >
             <span
-              class="font-sans text-sm text-muted"
+              class="font-sans text-sm text-thorn"
               :class="{ 'font-khmer!': locale === 'kh' }"
-              >{{ t("event.dressCode") }}:
-              <span class="text-gold">{{ dressCode }}</span></span
             >
+              {{ t("event.dressCode") }}:
+              <span class="text-rose">{{ dressCode }}</span>
+            </span>
           </div>
         </div>
       </div>
@@ -219,7 +211,6 @@ onMounted(() => {
   el.querySelectorAll(".timeline-item").forEach((item) => {
     const card = item.querySelector(".timeline-card") as HTMLElement;
     const dot = item.querySelector(".timeline-dot") as HTMLElement;
-
     if (card) {
       gsap.fromTo(
         card,

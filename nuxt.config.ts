@@ -1,5 +1,4 @@
 import tailwindcss from "@tailwindcss/vite";
-import { wedding } from "./config/wedding";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -10,10 +9,7 @@ export default defineNuxtConfig({
 
   modules: ["@nuxtjs/google-fonts", "@nuxt/icon", "nuxt3-leaflet"],
 
-  components: [
-    { path: "~/components" },
-    { path: `~/templates/${wedding.template}`, pathPrefix: false },
-  ],
+  components: [{ path: "~/components" }],
 
   vite: {
     plugins: [tailwindcss()],
@@ -47,25 +43,13 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: process.env.NUXT_PUBLIC_API_BASE || "http://localhost:3344",
-      weddingSlug: process.env.NUXT_PUBLIC_WEDDING_SLUG || "dear-lida",
     },
   },
 
   app: {
     head: {
-      title: "Nato & Rita — Wedding Invitation",
       meta: [
-        {
-          name: "description",
-          content:
-            "You are cordially invited to celebrate the wedding of Nato & Rita",
-        },
         { name: "viewport", content: "width=device-width, initial-scale=1" },
-        { property: "og:title", content: "Nato & Rita — Wedding Invitation" },
-        {
-          property: "og:description",
-          content: "Join us in celebrating our love",
-        },
         { name: "theme-color", content: "#C8A96E" },
       ],
       link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],

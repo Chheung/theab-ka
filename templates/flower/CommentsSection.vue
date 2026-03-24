@@ -1,53 +1,49 @@
 <template>
   <section
     ref="sectionRef"
-    class="relative bg-dark-soft overflow-hidden py-36 px-6"
+    class="relative bg-bloom-soft overflow-hidden py-36 px-6"
   >
     <div class="mx-auto w-full">
-      <!-- Heading -->
       <div class="text-center mb-20">
         <p
-          class="comments-script font-sans text-xs uppercase tracking-[0.4em] text-gold/60 mb-4 will-change-transform"
+          class="comments-script font-sans text-xs uppercase tracking-[0.4em] text-rose/60 mb-4 will-change-transform"
           :class="{ 'font-khmer! text-sm! tracking-normal!': locale === 'kh' }"
         >
           {{ t("comments.subtitle") }}
         </p>
         <h2
-          class="comments-title font-display text-5xl text-warm-white font-semibold will-change-transform"
+          class="comments-title font-display text-5xl text-bark font-semibold will-change-transform"
           :class="{ 'font-khmer! text-4xl!': locale === 'kh' }"
         >
           {{ t("comments.title") }}
         </h2>
       </div>
 
-      <!-- Comments -->
       <div class="space-y-6" style="perspective: 1200px">
         <div
           v-for="comment in comments"
           :key="comment.id"
-          class="comment-card bg-dark-card border border-white/6 rounded-xl p-6 will-change-transform"
+          class="comment-card bg-bloom-card border border-rose/10 rounded-xl p-6 shadow-sm will-change-transform"
         >
           <div class="flex items-start gap-5">
             <div class="shrink-0">
               <div
-                class="w-10 h-10 rounded-full flex items-center justify-center text-warm-white font-sans font-medium text-xs"
+                class="w-10 h-10 rounded-full flex items-center justify-center text-white font-sans font-medium text-xs"
                 :style="{ background: comment.avatarBg }"
               >
                 {{ comment.initials }}
               </div>
             </div>
             <div class="flex-1 min-w-0">
-              <h4
-                class="font-display text-base text-warm-white font-semibold mb-0.5"
-              >
+              <h4 class="font-display text-base text-bark font-semibold mb-0.5">
                 {{ comment.name }}
               </h4>
               <p
-                class="font-sans text-[10px] uppercase tracking-[0.25em] text-gold/40 mb-4"
+                class="font-sans text-[10px] uppercase tracking-[0.25em] text-rose/50 mb-4"
               >
                 {{ comment.relation }}
               </p>
-              <p class="font-serif text-sm text-muted leading-relaxed italic">
+              <p class="font-serif text-sm text-thorn leading-relaxed italic">
                 "{{ comment.message }}"
               </p>
             </div>
@@ -75,17 +71,14 @@ const comments = computed(() =>
 );
 
 const { locale, t } = useI18n();
-
 if (import.meta.client) {
   gsap.registerPlugin(ScrollTrigger);
 }
-
 const sectionRef = ref<HTMLElement | null>(null);
 
 onMounted(() => {
   const el = sectionRef.value;
   if (!el) return;
-
   const q = gsap.utils.selector(el);
 
   gsap.fromTo(

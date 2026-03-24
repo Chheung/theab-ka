@@ -1,29 +1,27 @@
 <template>
   <section
     ref="sectionRef"
-    class="relative bg-dark-soft overflow-hidden min-h-screen flex flex-col justify-center"
+    class="relative bg-bloom overflow-hidden min-h-screen flex flex-col justify-center"
   >
-    <!-- Heading -->
     <div class="text-center py-28 px-6">
       <p
-        class="map-script font-sans text-xs uppercase tracking-[0.4em] text-gold/60 mb-4 will-change-transform"
+        class="map-script font-sans text-xs uppercase tracking-[0.4em] text-rose/60 mb-4 will-change-transform"
         :class="{ 'font-khmer! text-sm! tracking-normal!': locale === 'kh' }"
       >
         {{ t("venue.subtitle") }}
       </p>
       <h2
-        class="map-title font-display text-5xl text-warm-white font-semibold will-change-transform"
+        class="map-title font-display text-5xl text-bark font-semibold will-change-transform"
         :class="{ 'font-khmer! text-4xl!': locale === 'kh' }"
       >
         {{ t("venue.title") }}
       </h2>
     </div>
 
-    <!-- Map -->
     <div ref="mapPin" class="relative px-6 pb-28">
       <div class="map-container relative w-full mx-auto will-change-transform">
         <div
-          class="map-clip rounded-xl overflow-hidden border border-white/6 h-100"
+          class="map-clip rounded-xl overflow-hidden border border-rose/10 h-100 shadow-sm"
           style="clip-path: circle(0% at 50% 50%)"
         >
           <ClientOnly>
@@ -33,7 +31,7 @@
               :use-global-leaflet="false"
             >
               <LTileLayer
-                url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+                url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
                 attribution="&copy; OpenStreetMap &copy; CARTO"
               />
               <LMarker :lat-lng="[venue?.lat ?? 0, venue?.lng ?? 0]">
@@ -50,9 +48,9 @@
             </LMap>
             <template #fallback>
               <div
-                class="w-full h-full bg-dark-card flex items-center justify-center"
+                class="w-full h-full bg-bloom-card flex items-center justify-center"
               >
-                <p class="text-muted/50 font-sans text-sm">
+                <p class="text-thorn/50 font-sans text-sm">
                   {{ t("ui.loadingMap") }}
                 </p>
               </div>
@@ -61,13 +59,12 @@
         </div>
       </div>
 
-      <!-- Get directions -->
       <div class="map-link text-center mt-10 will-change-transform">
         <a
           :href="venue?.map_url"
           target="_blank"
           rel="noopener"
-          class="inline-flex items-center gap-3 font-sans text-sm uppercase tracking-[0.2em] text-gold/60 hover:text-gold transition-colors duration-300 group"
+          class="inline-flex items-center gap-3 font-sans text-sm uppercase tracking-[0.2em] text-rose/60 hover:text-rose transition-colors duration-300 group"
         >
           {{ t("venue.getDirections") }}
           <svg
@@ -95,9 +92,7 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 const { wedding } = useWedding();
-
 const venue = computed(() => wedding.value?.venues?.[0]);
-
 const { locale, t } = useI18n();
 
 if (import.meta.client) {
@@ -110,7 +105,6 @@ const mapPin = ref<HTMLElement | null>(null);
 onMounted(() => {
   const el = sectionRef.value;
   if (!el) return;
-
   const q = gsap.utils.selector(el);
 
   gsap.fromTo(
@@ -141,7 +135,6 @@ onMounted(() => {
       },
     },
   );
-
   gsap.to(q(".map-clip"), {
     clipPath: "circle(100% at 50% 50%)",
     ease: "none",

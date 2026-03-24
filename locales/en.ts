@@ -1,4 +1,8 @@
 export default {
+  cover: {
+    youAreInvited: "YOU ARE INVITED",
+    clickToOpen: "Click here to open",
+  },
   hero: {
     weddingOf: "The Wedding of",
     youreInvited: "You're invited",
@@ -62,6 +66,7 @@ export default {
   gallery: {
     subtitle: "Cherished Memories",
     title: "Our Gallery",
+    tapToOpen: "Tap to open",
     items: [
       { alt: "Our first date at the riverside cafe", date: "March 2024" },
       { alt: "Sunset walk along the beach", date: "June 2024" },
@@ -82,7 +87,8 @@ export default {
     title: "Gift",
     copyAccount: "Copy Account",
     copied: "Copied",
-    message: "Your presence at our wedding is the greatest gift of all. However, if you wish to honor us with a gift, we would be grateful for your blessing.",
+    message:
+      "Your presence at our wedding is the greatest gift of all. However, if you wish to honor us with a gift, we would be grateful for your blessing.",
   },
   venue: {
     subtitle: "Find Your Way",
@@ -110,4 +116,4 @@ export default {
     short: "15 . 08 . 2026",
     location: "Phnom Penh",
   },
-}
+};
